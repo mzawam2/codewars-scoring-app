@@ -6,11 +6,10 @@
       <th>CodeWars User</th>
       <th>Completed Katas</th>
       <th>Points</th>
-      <th>Time Calculated</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of displayItems">
+    <tr *ngFor="let item of sortedItems()">
       <td>{{ item.teamName }}</td>
       <td>{{ item.teamMembers.join(', ') }}</td>
       <td>{{ item.codeWarsUser }}</td>
@@ -20,7 +19,6 @@
         </ul>
       </td>
       <td>{{ item.points }}</td>
-      <td>{{item.time}}</td>
     </tr>
   </tbody>
 </table>

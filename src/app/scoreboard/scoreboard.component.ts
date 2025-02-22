@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ScoreBoardItem } from '../score-board-item';
 import { Observable, Subscription } from 'rxjs';
@@ -12,15 +12,15 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class ScoreboardComponent implements OnInit, OnDestroy {
   @Input() items$!: Observable<ScoreBoardItem[]>;
-  displayItems: ScoreBoardItem[] = [];
+  displayItems = signal<ScoreBoardItem[]>([]);
+  sortedItems = computed(() => 
+    this.displayItems().sort((a, b) => b.points - a.points)
+  );
   private subscription?: Subscription;
 
   ngOnInit() {
     this.subscription = this.items$.subscribe(items => {
-      this.displayItems = items;
-      this.displayItems.forEach(item => {
-        console.log(item.completedKatas)
-      });
+      this.displayItems.set(items);
     });
   }
 
