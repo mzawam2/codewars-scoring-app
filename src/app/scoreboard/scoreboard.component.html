@@ -4,7 +4,7 @@
       <th>Team Name</th>
       <th>Team Members</th>
       <th>CodeWars User</th>
-      <th>Completed Katas</th>
+      <!-- <th>Completed Katas</th> -->
       <th>Points</th>
     </tr>
   </thead>
@@ -13,11 +13,11 @@
       <td>{{ item.teamName }}</td>
       <td>{{ item.teamMembers.join(', ') }}</td>
       <td>{{ item.codeWarsUser }}</td>
-      <td>
+      <!-- <td>
         <ul>
           <li *ngFor="let kata of item.completedKatas">{{ kata }}</li>
         </ul>
-      </td>
+      </td> -->
       <td>{{ item.points }}</td>
     </tr>
   </tbody>

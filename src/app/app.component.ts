@@ -60,6 +60,46 @@ export class AppComponent implements OnInit, OnDestroy {
     codeWarsUser: "SteveSitko",
     completedKatas: [],
     points: 0
+  },{
+    teamName: "Code Ninjas",
+    teamMembers: ["Me", "MySelf"],
+    codeWarsUser: "mzawam",
+    completedKatas: [],
+    points: 0
+  }, {
+    teamName: "Code Ninjas2",
+    teamMembers: ["The Dude", "Donnie"],
+    codeWarsUser: "xDranik",
+    completedKatas: [],
+    points: 0
+  },
+  {
+    teamName: "Code Ninjas3",
+    teamMembers: ["Josh", "Noah"],
+    codeWarsUser: "Cousin-Joe",
+    completedKatas: [],
+    points: 0
+  },
+  {
+    teamName: "Code Ninjas4",
+    teamMembers: ["Ian", "John"],
+    codeWarsUser: "cyclump",
+    completedKatas: [],
+    points: 0
+  },
+  {
+    teamName: "Code Ninjas5",
+    teamMembers: ["Joseph", "Donnie"],
+    codeWarsUser: "10PercentTestCoverage",
+    completedKatas: [],
+    points: 0
+  },
+  {
+    teamName: "Code Ninjas6",
+    teamMembers: ["Steve", "Morty"],
+    codeWarsUser: "SteveSitko",
+    completedKatas: [],
+    points: 0
   },
 ]);
 
