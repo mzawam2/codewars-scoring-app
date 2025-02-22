@@ -118,7 +118,7 @@ export class AppComponent implements OnInit, OnDestroy {
         const kataPoints = challenge.rank.id * -1; // Convert negative rank to positive points
         return {
           ...acc,
-          completedKatas: [...acc.completedKatas, challenge.name+"  |"+ new Date(challenge.completedAt).getHours()+":"+ new Date(challenge.completedAt).getMinutes()],
+          completedKatas: [...acc.completedKatas, challenge.name+" - "+ new Date(challenge.completedAt).getHours()+":"+ new Date(challenge.completedAt).getMinutes()],
           points: acc.points + kataPoints,
           time: new Date().getHours() + ":" + new Date().getMinutes()
         };
