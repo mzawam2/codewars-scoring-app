@@ -16,7 +16,7 @@ import { CodeChallengeResponse } from './code-challenge-response';
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit, OnDestroy {
-  title = 'ScoreBoard';
+  title = 'Hackathon ScoreBoard';
   
   solvedChallenges: UsersCodeChallenge[] = [];
   private readonly destroy$ = new Subject<void>();
