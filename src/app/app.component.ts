@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   title = 'Hackathon ScoreBoard';
   teams: ScoreBoardItem[] = INITIAL_TEAMS;
   private readonly POLL_INTERVAL = 300000; // 5 minutes
-  private readonly START_DATE = new Date("2020-04-10");
+  private readonly START_DATE = new Date("2015-04-10");
 
   constructor(private userService: UserService) {}
 
