@@ -17,7 +17,7 @@ import { CodeChallengeResponse } from './code-challenge-response';
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'Hackathon ScoreBoard';
-  
+
   solvedChallenges: UsersCodeChallenge[] = [];
   private readonly destroy$ = new Subject<void>();
   private readonly teamsSubject = new BehaviorSubject<ScoreBoardItem[]>([{
@@ -60,44 +60,171 @@ export class AppComponent implements OnInit, OnDestroy {
     codeWarsUser: "SteveSitko",
     completedKatas: [],
     points: 0
-  },{
-    teamName: "Code Ninjas",
-    teamMembers: ["Me", "MySelf"],
-    codeWarsUser: "mzawam",
-    completedKatas: [],
-    points: 0
-  }, {
-    teamName: "Code Ninjas2",
-    teamMembers: ["The Dude", "Donnie"],
-    codeWarsUser: "xDranik",
+  },  {
+    teamName: "Maggie Cook",
+    teamMembers: ["Maggie Cook"],
+    codeWarsUser: "maggie_cook",
     completedKatas: [],
     points: 0
   },
   {
-    teamName: "Code Ninjas3",
-    teamMembers: ["Josh", "Noah"],
-    codeWarsUser: "Cousin-Joe",
+    teamName: "Lauren Toth",
+    teamMembers: ["Lauren Toth"],
+    codeWarsUser: "laurentoth",
     completedKatas: [],
     points: 0
   },
   {
-    teamName: "Code Ninjas4",
-    teamMembers: ["Ian", "John"],
-    codeWarsUser: "cyclump",
+    teamName: "Drew Cellar",
+    teamMembers: ["Drew Cellar"],
+    codeWarsUser: "dCellar",
     completedKatas: [],
     points: 0
   },
   {
-    teamName: "Code Ninjas5",
-    teamMembers: ["Joseph", "Donnie"],
-    codeWarsUser: "10PercentTestCoverage",
+    teamName: "Chethas Pyla",
+    teamMembers: ["Chethas Pyla"],
+    codeWarsUser: "chethas1",
     completedKatas: [],
     points: 0
   },
   {
-    teamName: "Code Ninjas6",
-    teamMembers: ["Steve", "Morty"],
-    codeWarsUser: "SteveSitko",
+    teamName: "Karthik Thokala",
+    teamMembers: ["Karthik Thokala"],
+    codeWarsUser: "karthikThokala",
+    completedKatas: [],
+    points: 0
+  },
+  {
+    teamName: "Anna Peters",
+    teamMembers: ["Anna Peters"],
+    codeWarsUser: "ampeters",
+    completedKatas: [],
+    points: 0
+  },
+  {
+    teamName: "Kieran Fields",
+    teamMembers: ["Kieran Fields"],
+    codeWarsUser: "Kyiranes",
+    completedKatas: [],
+    points: 0
+  },
+  {
+    teamName: "Rohan Baste-Bania",
+    teamMembers: ["Rohan Baste-Bania"],
+    codeWarsUser: "RohanBB",
+    completedKatas: [],
+    points: 0
+  },
+  {
+    teamName: "Will Robertson",
+    teamMembers: ["Will Robertson"],
+    codeWarsUser: "wrobertson2024",
+    completedKatas: [],
+    points: 0
+  },
+  {
+    teamName: "Parker Brownlowe",
+    teamMembers: ["Parker Brownlowe"],
+    codeWarsUser: "TheGamer1002",
+    completedKatas: [],
+    points: 0
+  },
+  {
+    teamName: "Jachin Ocacio",
+    teamMembers: ["Jachin Ocacio"],
+    codeWarsUser: "BaconEmojis",
+    completedKatas: [],
+    points: 0
+  },
+  {
+    teamName: "Landond Derryberry",
+    teamMembers: ["Landond Derryberry"],
+    codeWarsUser: "Lderryberry",
+    completedKatas: [],
+    points: 0
+  },
+  {
+    teamName: "Lora Hackworth",
+    teamMembers: ["Lora Hackworth"],
+    codeWarsUser: "LoraGHackworth",
+    completedKatas: [],
+    points: 0
+  },
+  {
+    teamName: "Hannah Myers",
+    teamMembers: ["Hannah Myers"],
+    codeWarsUser: "xstinkylickerxmeow",
+    completedKatas: [],
+    points: 0
+  },
+  {
+    teamName: "Andrew Semchishin",
+    teamMembers: ["Andrew Semchishin"],
+    codeWarsUser: "AndrewSem775",
+    completedKatas: [],
+    points: 0
+  },
+  {
+    teamName: "Patrick Dunn",
+    teamMembers: ["Patrick Dunn"],
+    codeWarsUser: "patmd",
+    completedKatas: [],
+    points: 0
+  },
+  {
+    teamName: "Sasha",
+    teamMembers: ["Sasha"],
+    codeWarsUser: "MildRacc",
+    completedKatas: [],
+    points: 0
+  },
+  {
+    teamName: "Chris Pomeroy",
+    teamMembers: ["Chris Pomeroy"],
+    codeWarsUser: "NullPointerException-1",
+    completedKatas: [],
+    points: 0
+  },
+  {
+    teamName: "Joseph Momot",
+    teamMembers: ["Joseph Momot"],
+    codeWarsUser: "JosephMomot",
+    completedKatas: [],
+    points: 0
+  },
+  {
+    teamName: "Jared Rabadam",
+    teamMembers: ["Jared Rabadam"],
+    codeWarsUser: "jrab",
+    completedKatas: [],
+    points: 0
+  },
+  {
+    teamName: "Philip Gu",
+    teamMembers: ["Philip Gu"],
+    codeWarsUser: "pgu15",
+    completedKatas: [],
+    points: 0
+  },
+  {
+    teamName: "Raghava Deivanaathan",
+    teamMembers: ["Raghava Deivanaathan"],
+    codeWarsUser: "RaghavaD",
+    completedKatas: [],
+    points: 0
+  },
+  {
+    teamName: "Noirit Ghosh Choudhuri",
+    teamMembers: ["Noirit Ghosh Choudhuri"],
+    codeWarsUser: "noiritgc",
+    completedKatas: [],
+    points: 0
+  },
+  {
+    teamName: "Michael Lindsay",
+    teamMembers: ["Michael Lindsay"],
+    codeWarsUser: "Lindsay.1",
     completedKatas: [],
     points: 0
   },
@@ -139,12 +266,12 @@ export class AppComponent implements OnInit, OnDestroy {
   private loadTeamData(team: ScoreBoardItem): Observable<ScoreBoardItem> {
     return this.userService.getCodeChallengesByUser(team.codeWarsUser, 0).pipe(
       mergeMap(resp => {
-        const filteredResponse = resp.data.filter((codeChallenge: UsersCodeChallenge) => 
-          new Date(codeChallenge.completedAt) > new Date("2015-04-10") 
+        const filteredResponse = resp.data.filter((codeChallenge: UsersCodeChallenge) =>
+          new Date(codeChallenge.completedAt) > new Date("2024-04-01")
         );
         return from(filteredResponse);
       }),
-      mergeMap((codeChallenge: UsersCodeChallenge) => 
+      mergeMap((codeChallenge: UsersCodeChallenge) =>
         this.userService.getCodeChallenge(codeChallenge.id).pipe(
           map(challenge => ({
             ...challenge,
@@ -159,7 +286,7 @@ export class AppComponent implements OnInit, OnDestroy {
         return {
           ...acc,
           completedKatas: [...acc.completedKatas, challenge.name+" - "+ new Date(challenge.completedAt).getHours()+":"+ new Date(challenge.completedAt).getMinutes()],
-          points: acc.points + kataPoints,
+          points: acc.points + 1,
           time: new Date().getHours() + ":" + new Date().getMinutes()
         };
       }, {...team, completedKatas: [], points: 0}) // Start with fresh completedKatas array and points
