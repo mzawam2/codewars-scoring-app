@@ -1,14 +1,29 @@
+.scoreboard-container {
+  height: 90vh;
+  overflow: hidden;
+  position: relative;
+  margin: 2rem auto;
+  max-width: 1400px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.scoreboard-scroll {
+  height: 100%;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
 .scoreboard {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  margin: 2rem 0;
   background: white;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-
+  
   thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
     background: linear-gradient(45deg, #2c3e50, #3498db);
     color: white;
     
@@ -97,6 +112,12 @@
 
 // Add some responsive styles
 @media (max-width: 768px) {
+  .scoreboard-container {
+    height: 100vh;
+    margin: 0;
+    border-radius: 0;
+  }
+
   .scoreboard {
     font-size: 0.9rem;
     

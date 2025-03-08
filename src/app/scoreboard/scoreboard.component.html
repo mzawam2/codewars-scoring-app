@@ -1,24 +1,28 @@
-<table class="scoreboard">
-  <thead>
-    <tr>
-      <th>Team Name</th>
-      <th>Team Members</th>
-      <th>CodeWars User</th>
-      <th>Completed Katas</th>
-      <th>Points</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let item of sortedItems()">
-      <td>{{ item.teamName }}</td>
-      <td>{{ item.teamMembers.join(', ') }}</td>
-      <td>{{ item.codeWarsUser }}</td>
-      <td>
-        <ul>
-          <li *ngFor="let kata of item.completedKatas">{{ kata }}</li>
-        </ul>
-      </td>
-      <td>{{ item.points }}</td>
-    </tr>
-  </tbody>
-</table>
+<div class="scoreboard-container">
+  <div #scoreboardScroll class="scoreboard-scroll">
+    <table class="scoreboard">
+      <thead>
+        <tr>
+          <th>Team Name</th>
+          <th>Team Members</th>
+          <th>CodeWars User</th>
+          <th>Completed Katas</th>
+          <th>Points</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of sortedItems()">
+          <td>{{ item.teamName }}</td>
+          <td>{{ item.teamMembers.join(', ') }}</td>
+          <td>{{ item.codeWarsUser }}</td>
+          <td>
+            <ul>
+              <li *ngFor="let kata of item.completedKatas">{{ kata }}</li>
+            </ul>
+          </td>
+          <td>{{ item.points }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
