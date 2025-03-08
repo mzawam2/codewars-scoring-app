@@ -2,22 +2,30 @@ import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { UserService } from './user.service';
 import { UsersCodeChallengesResponse } from './users-code-challenges-response';
-import { BehaviorSubject, Observable, filter, from, map, mergeMap, switchMap, combineLatest, interval, startWith, takeUntil, Subject, reduce } from 'rxjs';
+import { BehaviorSubject, Observable, filter, from, map, mergeMap, switchMap, combineLatest, interval, startWith, takeUntil, Subject, reduce, of } from 'rxjs';
 import { UsersCodeChallenge } from './users-code-challenge';
 import { ScoreBoardItem } from './score-board-item';
 import { ScoreboardComponent } from './scoreboard/scoreboard.component';
 import { CommonModule } from '@angular/common';
 import { CodeChallengeResponse } from './code-challenge-response';
 
+const CACHE_KEY = 'codewars_challenge_cache';
+
+interface ChallengeCache {
+  [key: string]: CodeChallengeResponse & { completedAt: string };
+}
+
 @Component({
   selector: 'app-root',
   imports: [ ScoreboardComponent, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
+  standalone: true
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'Hackathon ScoreBoard';
-
+  private readonly userService = inject(UserService);
+  
   solvedChallenges: UsersCodeChallenge[] = [];
   private readonly destroy$ = new Subject<void>();
   private readonly teamsSubject = new BehaviorSubject<ScoreBoardItem[]>([{
@@ -233,7 +241,7 @@ export class AppComponent implements OnInit, OnDestroy {
   // Observable for the UI to subscribe to
   public readonly scoreBoardItems$: Observable<ScoreBoardItem[]>;
 
-  constructor(private userService: UserService) {
+  constructor() {
     // Set up the main data stream
     this.scoreBoardItems$ = interval(300000).pipe(
       startWith(0), // Emit immediately and then every 5 minutes
@@ -252,6 +260,36 @@ export class AppComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  private getCache(): ChallengeCache {
+    const cached = sessionStorage.getItem(CACHE_KEY);
+    return cached ? JSON.parse(cached) : {};
+  }
+
+  private updateCache(id: string, challenge: CodeChallengeResponse & { completedAt: string }): void {
+    const currentCache = this.getCache();
+    const updatedCache = {
+      ...currentCache,
+      [id]: challenge
+    };
+    sessionStorage.setItem(CACHE_KEY, JSON.stringify(updatedCache));
+  }
+
+  private getCachedChallenge(id: string, completedAt: string): Observable<CodeChallengeResponse & { completedAt: string }> {
+    const cache = this.getCache();
+    if (cache[id]) {
+      return of(cache[id]);
+    }
+
+    return this.userService.getCodeChallenge(id).pipe(
+      map(challenge => {
+        const challengeWithTime = { ...challenge, completedAt };
+        // Update cache
+        this.updateCache(id, challengeWithTime);
+        return challengeWithTime;
+      })
+    );
+  }
+
   private loadScoreboardData(): Observable<ScoreBoardItem[]> {
     return this.teamsSubject.pipe(
       switchMap(teams => {
@@ -264,32 +302,26 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private loadTeamData(team: ScoreBoardItem): Observable<ScoreBoardItem> {
+    const startDate = new Date("2024-04-01").getTime();
+    
     return this.userService.getCodeChallengesByUser(team.codeWarsUser, 0).pipe(
       mergeMap(resp => {
         const filteredResponse = resp.data.filter((codeChallenge: UsersCodeChallenge) =>
-          new Date(codeChallenge.completedAt) > new Date("2024-04-01")
+          new Date(codeChallenge.completedAt).getTime() > startDate
         );
         return from(filteredResponse);
       }),
       mergeMap((codeChallenge: UsersCodeChallenge) =>
-        this.userService.getCodeChallenge(codeChallenge.id).pipe(
-          map(challenge => ({
-            ...challenge,
-            completedAt: codeChallenge.completedAt
-          }))
-        )
+        this.getCachedChallenge(codeChallenge.id, new Date(codeChallenge.completedAt).toDateString())
       ),
-      // Collect all katas using reduce
       reduce((acc: ScoreBoardItem, challenge) => {
-        // Calculate points based on kata rank and completion order
-        const kataPoints = challenge.rank.id * -1; // Convert negative rank to positive points
         return {
           ...acc,
-          completedKatas: [...acc.completedKatas, challenge.name+" - "+ new Date(challenge.completedAt).getHours()+":"+ new Date(challenge.completedAt).getMinutes()],
+          completedKatas: [...acc.completedKatas, challenge.name],
           points: acc.points + 1,
-          time: new Date().getHours() + ":" + new Date().getMinutes()
+          time: `${new Date().getHours().toString().padStart(2, '0')}:${new Date().getMinutes().toString().padStart(2, '0')}`
         };
-      }, {...team, completedKatas: [], points: 0}) // Start with fresh completedKatas array and points
+      }, {...team, completedKatas: [], points: 0})
     );
   }
 }
