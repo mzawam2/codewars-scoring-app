@@ -17,7 +17,7 @@ interface ChallengeCache {
 
 @Component({
   selector: 'app-root',
-  imports: [ ScoreboardComponent, CommonModule],
+  imports: [ScoreboardComponent, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   standalone: true
@@ -25,7 +25,17 @@ interface ChallengeCache {
 export class AppComponent implements OnInit, OnDestroy {
   title = 'Hackathon ScoreBoard';
   private readonly userService = inject(UserService);
-  
+  private kataPoints = new Map<number, number>([
+    [8, 5],
+    [7, 15],
+    [6, 30],
+    [5, 50],
+    [4, 75],
+    [3, 100],
+    [2, 150],
+    [1, 200]
+  ]);
+
   solvedChallenges: UsersCodeChallenge[] = [];
   private readonly destroy$ = new Subject<void>();
   private readonly teamsSubject = new BehaviorSubject<ScoreBoardItem[]>([{
@@ -68,7 +78,7 @@ export class AppComponent implements OnInit, OnDestroy {
     codeWarsUser: "SteveSitko",
     completedKatas: [],
     points: 0
-  },  {
+  }, {
     teamName: "Maggie Cook",
     teamMembers: ["Maggie Cook"],
     codeWarsUser: "maggie_cook",
@@ -236,7 +246,7 @@ export class AppComponent implements OnInit, OnDestroy {
     completedKatas: [],
     points: 0
   },
-]);
+  ]);
 
   // Observable for the UI to subscribe to
   public readonly scoreBoardItems$: Observable<ScoreBoardItem[]>;
@@ -296,14 +306,32 @@ export class AppComponent implements OnInit, OnDestroy {
         // Create an observable for each team's data
         const teamObservables = teams.map(team => this.loadTeamData(team));
         // Combine all team observables
-        return combineLatest(teamObservables);
+        return combineLatest(teamObservables).pipe(
+          map(scoreBoardItems => {
+            // Sort teams by points in descending order
+            const sortedTeams = scoreBoardItems.sort((a, b) => b.points - a.points);
+            // Assign ranks based on sorted order
+            return sortedTeams.map((team, index) => {
+              const previousTeam = sortedTeams[index - 1];
+              // If the previous team has the same points, assign the same rank
+              if( index === 0 || previousTeam.points !== team.points) {
+                return { ...team, rank: index + 1};
+              }
+              else if (previousTeam && previousTeam.points === team.points) {
+                return { ...team, rank: sortedTeams[index - 1].rank };
+              } else {
+                return { ...team, rank: (sortedTeams[index - 1].rank ?? 0) + 1};
+              }
+            });
+          })
+        );
       })
     );
   }
 
   private loadTeamData(team: ScoreBoardItem): Observable<ScoreBoardItem> {
     const startDate = new Date("2024-04-01").getTime();
-    
+
     return this.userService.getCodeChallengesByUser(team.codeWarsUser, 0).pipe(
       mergeMap(resp => {
         const filteredResponse = resp.data.filter((codeChallenge: UsersCodeChallenge) =>
@@ -315,13 +343,14 @@ export class AppComponent implements OnInit, OnDestroy {
         this.getCachedChallenge(codeChallenge.id, new Date(codeChallenge.completedAt).toDateString())
       ),
       reduce((acc: ScoreBoardItem, challenge) => {
+        const kataPts = this.kataPoints.get(Math.abs(challenge.rank.id)) || 0;
         return {
           ...acc,
           completedKatas: [...acc.completedKatas, challenge.name],
-          points: acc.points + 1,
+          points: acc.points + kataPts,
           time: `${new Date().getHours().toString().padStart(2, '0')}:${new Date().getMinutes().toString().padStart(2, '0')}`
         };
-      }, {...team, completedKatas: [], points: 0})
+      }, { ...team, completedKatas: [], points: 0 })
     );
   }
 }

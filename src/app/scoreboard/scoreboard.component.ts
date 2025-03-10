@@ -13,17 +13,17 @@ import { Observable, Subscription, interval } from 'rxjs';
 export class ScoreboardComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() items$!: Observable<ScoreBoardItem[]>;
   @ViewChild('scoreboardScroll') private scrollContainer?: ElementRef;
-  
+
   displayItems = signal<ScoreBoardItem[]>([]);
-  sortedItems = computed(() => 
+  sortedItems = computed(() =>
     this.displayItems().sort((a, b) => b.points - a.points)
   );
-  
+
   private subscription?: Subscription;
   private scrollSubscription?: Subscription;
   private isScrollingPaused = false;
-  private readonly SCROLL_INTERVAL = 25; // 3 seconds
-  private readonly SCROLL_STEP = 100; // pixels
+  private readonly SCROLL_INTERVAL = 24;
+  private readonly SCROLL_STEP = 3; // pixels
 
   ngOnInit() {
     this.subscription = this.items$.subscribe(items => {
@@ -53,7 +53,7 @@ export class ScoreboardComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.isScrollingPaused) return;
 
       const { scrollTop, scrollHeight, clientHeight } = scrollElement;
-      
+
       // If we're at the bottom, scroll back to top
       if (scrollTop + clientHeight >= scrollHeight) {
         scrollElement.scrollTo({ top: 0, behavior: 'instant' });
