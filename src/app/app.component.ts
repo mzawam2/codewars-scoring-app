@@ -22,7 +22,7 @@ interface ChallengeCache {
   styleUrl: './app.component.scss',
   standalone: true
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnDestroy {
   title = 'Hackathon ScoreBoard';
   private readonly userService = inject(UserService);
   private kataPoints = new Map<number, number>([
@@ -260,18 +260,13 @@ export class AppComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnInit(): void {
-    // Subscribe to start the data flow
-    this.scoreBoardItems$.subscribe();
-  }
-
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
 
   private getCache(): ChallengeCache {
-    const cached = sessionStorage.getItem(CACHE_KEY);
+    const cached = localStorage.getItem(CACHE_KEY);
     return cached ? JSON.parse(cached) : {};
   }
 
@@ -281,7 +276,7 @@ export class AppComponent implements OnInit, OnDestroy {
       ...currentCache,
       [id]: challenge
     };
-    sessionStorage.setItem(CACHE_KEY, JSON.stringify(updatedCache));
+    localStorage.setItem(CACHE_KEY, JSON.stringify(updatedCache));
   }
 
   private getCachedChallenge(id: string, completedAt: string): Observable<CodeChallengeResponse & { completedAt: string }> {
