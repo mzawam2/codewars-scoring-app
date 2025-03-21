@@ -270,7 +270,7 @@ export class AppComponent implements OnDestroy {
     return cached ? JSON.parse(cached) : {};
   }
 
-  private updateCache(id: string, challenge: CodeChallengeResponse & { completedAt: string }): void {
+  private updateCache(id: string, challenge: CodeChallengeResponse): void {
     const currentCache = this.getCache();
     const updatedCache = {
       ...currentCache,
@@ -279,7 +279,7 @@ export class AppComponent implements OnDestroy {
     localStorage.setItem(CACHE_KEY, JSON.stringify(updatedCache));
   }
 
-  private getCachedChallenge(id: string, completedAt: string): Observable<CodeChallengeResponse & { completedAt: string }> {
+  private getCachedChallenge(id: string): Observable<CodeChallengeResponse > {
     const cache = this.getCache();
     if (cache[id]) {
       return of(cache[id]);
@@ -287,10 +287,8 @@ export class AppComponent implements OnDestroy {
 
     return this.userService.getCodeChallenge(id).pipe(
       map(challenge => {
-        const challengeWithTime = { ...challenge, completedAt };
-        // Update cache
-        this.updateCache(id, challengeWithTime);
-        return challengeWithTime;
+        this.updateCache(id, challenge);
+        return challenge;
       })
     );
   }
@@ -308,15 +306,13 @@ export class AppComponent implements OnDestroy {
             // Assign ranks based on sorted order
             return sortedTeams.map((team, index) => {
               const previousTeam = sortedTeams[index - 1];
-              // If the previous team has the same points, assign the same rank
+              // If the previous team has the same points, do not assign a rank
               if( index === 0 || previousTeam.points !== team.points) {
                 return { ...team, rank: index + 1};
               }
-              else if (previousTeam && previousTeam.points === team.points) {
-                return { ...team, rank: sortedTeams[index - 1].rank };
-              } else {
-                return { ...team, rank: (sortedTeams[index - 1].rank ?? 0) + 1};
-              }
+              else {
+                return { ...team, rank: undefined };
+              } 
             });
           })
         );
@@ -335,7 +331,7 @@ export class AppComponent implements OnDestroy {
         return from(filteredResponse);
       }),
       mergeMap((codeChallenge: UsersCodeChallenge) =>
-        this.getCachedChallenge(codeChallenge.id, new Date(codeChallenge.completedAt).toDateString())
+        this.getCachedChallenge(codeChallenge.id)
       ),
       reduce((acc: ScoreBoardItem, challenge) => {
         const kataPts = this.kataPoints.get(Math.abs(challenge.rank.id)) || 0;

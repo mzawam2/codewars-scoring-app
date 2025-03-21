@@ -15,9 +15,9 @@ export class ScoreboardComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('scoreboardScroll') private scrollContainer?: ElementRef;
 
   displayItems = signal<ScoreBoardItem[]>([]);
-  sortedItems = computed(() =>
-    this.displayItems().sort((a, b) => b.points - a.points)
-  );
+  // sortedItems = computed(() =>
+  //   this.displayItems().sort((a, b) => b.points - a.points)
+  // );
 
   private subscription?: Subscription;
   private scrollSubscription?: Subscription;
