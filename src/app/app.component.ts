@@ -321,27 +321,86 @@ export class AppComponent implements OnDestroy {
   }
 
   private loadTeamData(team: ScoreBoardItem): Observable<ScoreBoardItem> {
-    const startDate = new Date("2024-04-01").getTime();
+    const startDate = new Date("2024-09-01").getTime();
+    const acceptedKatas = [
+      'Tiny Three-Pass Compiler',
+      'Loopover',
+      'Puzzle Fighter',
+      'Full Metal Chemist #1: build me...',
+      'Transforming Maze Solver',
+      'Game of Go',
+      'Insane Coloured Triangles',
+      'The Millionth Fibonacci Kata',
+      'Screen Locking Patterns',
+      'Alphabetic Anagrams',
+      'Battleship field validator',
+      'Simplifying',
+      'Blobservation',
+      'Papers, Please',
+      "Conway's Game of Life - Unlimited Edition",
+      'Mahjong - #1 Pure Hand',
+      'The observed PIN',
+      "Let's Play Darts!",
+      'Four Letter Words ~ Mutations',
+      'Card-Chameleon, a Cipher with Playing Cards',
+      'Optimized Pathfinding Algorithm',
+      'Who likes it?',
+      'Vowel Count',
+      'Square Every Digit',
+      'Getting the Middle Character',
+      "You're Square!",
+      'Isograms',
+      'Square(n) Sum',
+      'String repeat',
+      'Grasshopper Summation',
+      'Remove String Spaces',
+      'Square(n) Sum',
+      'String repeat',
+      'Grasshopper Summation',
+      'Remove String Spaces',
+      'Vowel Count',
+      'Square Every Digit',
+      'Getting the Middle Character',
+      "You're Square!",
+      'Isograms'
+    ]; // List of accepted katas
 
-    return this.userService.getCodeChallengesByUser(team.codeWarsUser, 0).pipe(
-      mergeMap(resp => {
-        const filteredResponse = resp.data.filter((codeChallenge: UsersCodeChallenge) =>
-          new Date(codeChallenge.completedAt).getTime() > startDate
-        );
-        return from(filteredResponse);
-      }),
-      mergeMap((codeChallenge: UsersCodeChallenge) =>
-        this.getCachedChallenge(codeChallenge.id)
-      ),
-      reduce((acc: ScoreBoardItem, challenge) => {
-        const kataPts = this.kataPoints.get(Math.abs(challenge.rank.id)) || 0;
-        return {
-          ...acc,
-          completedKatas: [...acc.completedKatas, challenge.name],
-          points: acc.points + kataPts,
-          time: `${new Date().getHours().toString().padStart(2, '0')}:${new Date().getMinutes().toString().padStart(2, '0')}`
-        };
-      }, { ...team, completedKatas: [], points: 0 })
+    const fetchAllPages = (page: number): Observable<UsersCodeChallenge[]> => {
+      return this.userService.getCodeChallengesByUser(team.codeWarsUser, page).pipe(
+        mergeMap(resp => {
+          const filteredData = resp.data.filter((codeChallenge: UsersCodeChallenge) =>
+            new Date(codeChallenge.completedAt).getTime() > startDate
+          );
+          if (resp.data.length > 0) {
+            return fetchAllPages(page + 1).pipe(
+              map(nextPageData => [...filteredData, ...nextPageData])
+            );
+          }
+          return of(filteredData);
+        })
+      );
+    };
+
+    return fetchAllPages(0).pipe(
+      mergeMap((allChallenges: UsersCodeChallenge[]) =>
+        from(allChallenges).pipe(
+          mergeMap((codeChallenge: UsersCodeChallenge) =>
+            this.getCachedChallenge(codeChallenge.id)
+          ),
+          reduce((acc: ScoreBoardItem, challenge) => {
+            if (acceptedKatas.includes(challenge.name)) { // Check if kata is in the accepted list
+              const kataPts = this.kataPoints.get(Math.abs(challenge.rank.id)) || 0;
+              return {
+                ...acc,
+                completedKatas: [...acc.completedKatas, challenge.name],
+                points: acc.points + kataPts,
+                time: `${new Date().getHours().toString().padStart(2, '0')}:${new Date().getMinutes().toString().padStart(2, '0')}`
+              };
+            }
+            return acc; // Skip other katas
+          }, { ...team, completedKatas: [], points: 0 })
+        )
+      )
     );
   }
 }

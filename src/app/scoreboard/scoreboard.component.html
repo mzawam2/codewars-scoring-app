@@ -1,4 +1,7 @@
 <div class="scoreboard-container">
+  <div class="scoreboard-time">
+    Last Updated: {{ displayItems()[0]?.time || 'N/A' }}
+  </div>
   <div #scoreboardScroll class="scoreboard-scroll">
 
     <table class="scoreboard">
@@ -10,7 +13,6 @@
           <th>CodeWars User</th>
           <th>Points</th>
           <th>Completed Katas</th>
-          <th>Time</th>
         </tr>
       </thead>
       <tbody>
@@ -21,7 +23,6 @@
           <td>{{ item.codeWarsUser }}</td>
           <td>{{ item.points }}</td>
           <td>{{ item.completedKatas.join(', ') }}</td>
-          <td>{{ item.time }}</td>
         </tr>
       </tbody>
     </table>
