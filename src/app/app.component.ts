@@ -40,12 +40,6 @@ export class AppComponent implements OnDestroy {
   private readonly destroy$ = new Subject<void>();
   private readonly teamsSubject = new BehaviorSubject<ScoreBoardItem[]>([
     {
-      teamMembers: ["Marshay M.Zawadi", "Chris Birie"],
-      codeWarsUser: "mzawam",
-      completedKatas: [],
-      points: 0
-    },
-    {
       teamMembers: ["Charlie Stought", "Timothy Burd"],
       codeWarsUser: "css99",
       completedKatas: [],
@@ -72,12 +66,6 @@ export class AppComponent implements OnDestroy {
     {
       teamMembers: ["David Varvas", "Alan Musick"],
       codeWarsUser: "dvarvas",
-      completedKatas: [],
-      points: 0
-    },
-    {
-      teamMembers: ["Alan Musick", "David Varvas"],
-      codeWarsUser: "musick.2",
       completedKatas: [],
       points: 0
     },
