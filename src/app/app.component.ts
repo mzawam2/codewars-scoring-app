@@ -27,7 +27,7 @@ export class AppComponent implements OnDestroy {
   private readonly userService = inject(UserService);
   private kataPoints = new Map<number, number>([
     [8, 5],
-    [7, 15],
+    [7, 10],
     [6, 30],
     [5, 50],
     [4, 75],
@@ -38,214 +38,13 @@ export class AppComponent implements OnDestroy {
 
   solvedChallenges: UsersCodeChallenge[] = [];
   private readonly destroy$ = new Subject<void>();
-  private readonly teamsSubject = new BehaviorSubject<ScoreBoardItem[]>([{
-    teamName: "Code Ninjas",
-    teamMembers: ["Me", "MySelf"],
-    codeWarsUser: "mzawam",
-    completedKatas: [],
-    points: 0
-  }, {
-    teamName: "Code Ninjas2",
-    teamMembers: ["The Dude", "Donnie"],
-    codeWarsUser: "xDranik",
-    completedKatas: [],
-    points: 0
-  },
-  {
-    teamName: "Code Ninjas3",
-    teamMembers: ["Josh", "Noah"],
-    codeWarsUser: "Cousin-Joe",
-    completedKatas: [],
-    points: 0
-  },
-  {
-    teamName: "Code Ninjas4",
-    teamMembers: ["Ian", "John"],
-    codeWarsUser: "cyclump",
-    completedKatas: [],
-    points: 0
-  },
-  {
-    teamName: "Code Ninjas5",
-    teamMembers: ["Joseph", "Donnie"],
-    codeWarsUser: "10PercentTestCoverage",
-    completedKatas: [],
-    points: 0
-  },
-  {
-    teamName: "Code Ninjas6",
-    teamMembers: ["Steve", "Morty"],
-    codeWarsUser: "SteveSitko",
-    completedKatas: [],
-    points: 0
-  }, {
-    teamName: "Maggie Cook",
-    teamMembers: ["Maggie Cook"],
-    codeWarsUser: "maggie_cook",
-    completedKatas: [],
-    points: 0
-  },
-  {
-    teamName: "Lauren Toth",
-    teamMembers: ["Lauren Toth"],
-    codeWarsUser: "laurentoth",
-    completedKatas: [],
-    points: 0
-  },
-  {
-    teamName: "Drew Cellar",
-    teamMembers: ["Drew Cellar"],
-    codeWarsUser: "dCellar",
-    completedKatas: [],
-    points: 0
-  },
-  {
-    teamName: "Chethas Pyla",
-    teamMembers: ["Chethas Pyla"],
-    codeWarsUser: "chethas1",
-    completedKatas: [],
-    points: 0
-  },
-  {
-    teamName: "Karthik Thokala",
-    teamMembers: ["Karthik Thokala"],
-    codeWarsUser: "karthikThokala",
-    completedKatas: [],
-    points: 0
-  },
-  {
-    teamName: "Anna Peters",
-    teamMembers: ["Anna Peters"],
-    codeWarsUser: "ampeters",
-    completedKatas: [],
-    points: 0
-  },
-  {
-    teamName: "Kieran Fields",
-    teamMembers: ["Kieran Fields"],
-    codeWarsUser: "Kyiranes",
-    completedKatas: [],
-    points: 0
-  },
-  {
-    teamName: "Rohan Baste-Bania",
-    teamMembers: ["Rohan Baste-Bania"],
-    codeWarsUser: "RohanBB",
-    completedKatas: [],
-    points: 0
-  },
-  {
-    teamName: "Will Robertson",
-    teamMembers: ["Will Robertson"],
-    codeWarsUser: "wrobertson2024",
-    completedKatas: [],
-    points: 0
-  },
-  {
-    teamName: "Parker Brownlowe",
-    teamMembers: ["Parker Brownlowe"],
-    codeWarsUser: "TheGamer1002",
-    completedKatas: [],
-    points: 0
-  },
-  {
-    teamName: "Jachin Ocacio",
-    teamMembers: ["Jachin Ocacio"],
-    codeWarsUser: "BaconEmojis",
-    completedKatas: [],
-    points: 0
-  },
-  {
-    teamName: "Landond Derryberry",
-    teamMembers: ["Landond Derryberry"],
-    codeWarsUser: "Lderryberry",
-    completedKatas: [],
-    points: 0
-  },
-  {
-    teamName: "Lora Hackworth",
-    teamMembers: ["Lora Hackworth"],
-    codeWarsUser: "LoraGHackworth",
-    completedKatas: [],
-    points: 0
-  },
-  {
-    teamName: "Hannah Myers",
-    teamMembers: ["Hannah Myers"],
-    codeWarsUser: "xstinkylickerxmeow",
-    completedKatas: [],
-    points: 0
-  },
-  {
-    teamName: "Andrew Semchishin",
-    teamMembers: ["Andrew Semchishin"],
-    codeWarsUser: "AndrewSem775",
-    completedKatas: [],
-    points: 0
-  },
-  {
-    teamName: "Patrick Dunn",
-    teamMembers: ["Patrick Dunn"],
-    codeWarsUser: "patmd",
-    completedKatas: [],
-    points: 0
-  },
-  {
-    teamName: "Sasha",
-    teamMembers: ["Sasha"],
-    codeWarsUser: "MildRacc",
-    completedKatas: [],
-    points: 0
-  },
-  {
-    teamName: "Chris Pomeroy",
-    teamMembers: ["Chris Pomeroy"],
-    codeWarsUser: "NullPointerException-1",
-    completedKatas: [],
-    points: 0
-  },
-  {
-    teamName: "Joseph Momot",
-    teamMembers: ["Joseph Momot"],
-    codeWarsUser: "JosephMomot",
-    completedKatas: [],
-    points: 0
-  },
-  {
-    teamName: "Jared Rabadam",
-    teamMembers: ["Jared Rabadam"],
-    codeWarsUser: "jrab",
-    completedKatas: [],
-    points: 0
-  },
-  {
-    teamName: "Philip Gu",
-    teamMembers: ["Philip Gu"],
-    codeWarsUser: "pgu15",
-    completedKatas: [],
-    points: 0
-  },
-  {
-    teamName: "Raghava Deivanaathan",
-    teamMembers: ["Raghava Deivanaathan"],
-    codeWarsUser: "RaghavaD",
-    completedKatas: [],
-    points: 0
-  },
-  {
-    teamName: "Noirit Ghosh Choudhuri",
-    teamMembers: ["Noirit Ghosh Choudhuri"],
-    codeWarsUser: "noiritgc",
-    completedKatas: [],
-    points: 0
-  },
-  {
-    teamName: "Michael Lindsay",
-    teamMembers: ["Michael Lindsay"],
-    codeWarsUser: "Lindsay.1",
-    completedKatas: [],
-    points: 0
-  },
+  private readonly teamsSubject = new BehaviorSubject<ScoreBoardItem[]>([
+    {
+      teamMembers: ["Marshay M.Zawadi", "Chris Birie"],
+      codeWarsUser: "mzawam",
+      completedKatas: [],
+      points: 0
+    }
   ]);
 
   // Observable for the UI to subscribe to
@@ -279,7 +78,7 @@ export class AppComponent implements OnDestroy {
     localStorage.setItem(CACHE_KEY, JSON.stringify(updatedCache));
   }
 
-  private getCachedChallenge(id: string): Observable<CodeChallengeResponse > {
+  private getCachedChallenge(id: string): Observable<CodeChallengeResponse> {
     const cache = this.getCache();
     if (cache[id]) {
       return of(cache[id]);
@@ -307,8 +106,8 @@ export class AppComponent implements OnDestroy {
             return sortedTeams.map((team, index) => {
               const previousTeam = sortedTeams[index - 1];
               // If the previous team has the same points, do not assign a rank
-              if( index === 0 || previousTeam.points !== team.points) {
-                return { ...team, rank: index + 1};
+              if (index === 0 || previousTeam.points !== team.points) {
+                return { ...team, rank: index + 1 };
               }
               else {
                 return { ...team, rank: undefined };
@@ -321,7 +120,7 @@ export class AppComponent implements OnDestroy {
   }
 
   private loadTeamData(team: ScoreBoardItem): Observable<ScoreBoardItem> {
-    const startDate = new Date("2024-09-01").getTime();
+    const startDate = new Date("2025-04-11").getTime();
     const acceptedKatas = [
       "Tiny Three-Pass Compiler",
       "Loopover",
@@ -360,16 +159,16 @@ export class AppComponent implements OnDestroy {
       "Fibonacci, Tribonacci and friends",
       "Nut Farm",
       "Split Strings",
-      "Emotional Sort",
+      "Emotional Sort ( ︶︿︶)",
       "Word a10n (abbreviation)",
       "Vowel Count",
       "Square Every Digit",
-      "Getting the Middle Character",
+      "Get the Middle Character",
       "You're a square!",
       "Isograms",
       "Square(n) Sum",
       "String repeat",
-      "Grasshopper Summation",
+      "Grasshopper - Summation",
       "Remove String Spaces",
     ]; // List of accepted katas
 
