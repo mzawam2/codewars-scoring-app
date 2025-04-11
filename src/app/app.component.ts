@@ -266,7 +266,7 @@ export class AppComponent implements OnDestroy {
       "Range Extraction",
       "Human Readable duration format",
       "So Many Permutations!",
-      "Strings Max",
+      "Strings Mix",
       "Let's Play Darts!",
       "Four Letter Words ~ Mutations",
       "Card-Chameleon, a Cipher with Playing Cards",
