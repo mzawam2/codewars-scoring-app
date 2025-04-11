@@ -242,6 +242,7 @@ export class AppComponent implements OnDestroy {
 
   private loadTeamData(team: ScoreBoardItem): Observable<ScoreBoardItem> {
     const startDate = new Date("2025-04-11").getTime();
+    const endDate = new Date(2025, 3, 11, 13, 30, 0).getTime(); // April 11, 2025 at 1:30 PM
     const acceptedKatas = [
       "Tiny Three-Pass Compiler",
       "Loopover",
@@ -296,9 +297,10 @@ export class AppComponent implements OnDestroy {
     const fetchAllPages = (page: number): Observable<UsersCodeChallenge[]> => {
       return this.userService.getCodeChallengesByUser(team.codeWarsUser, page).pipe(
         mergeMap(resp => {
-          const filteredData = resp.data.filter((codeChallenge: UsersCodeChallenge) =>
-            new Date(codeChallenge.completedAt).getTime() > startDate
-          );
+          const filteredData = resp.data.filter((codeChallenge: UsersCodeChallenge) => {
+            const completedTime = new Date(codeChallenge.completedAt).getTime();
+            return completedTime > startDate && completedTime <= endDate;
+          });
           if (resp.data.length > 0) {
             return fetchAllPages(page + 1).pipe(
               map(nextPageData => [...filteredData, ...nextPageData])
