@@ -148,6 +148,12 @@ export class AppComponent implements OnDestroy {
       completedKatas: [],
       points: 0
     },
+    {
+      teamMembers: ["Noah Dombrowski", "Chris Pomeroy"],
+      codeWarsUser: "bobcatnoah",
+      completedKatas: [],
+      points: 0
+    },
   ]);
 
   // Observable for the UI to subscribe to
