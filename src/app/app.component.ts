@@ -44,7 +44,122 @@ export class AppComponent implements OnDestroy {
       codeWarsUser: "mzawam",
       completedKatas: [],
       points: 0
-    }
+    },
+    {
+      teamMembers: ["Charlie Stought", "Timothy Burd"],
+      codeWarsUser: "css99",
+      completedKatas: [],
+      points: 0
+    },
+    {
+      teamMembers: ["Aarav Kolgaonkar", "Colin Shaw"],
+      codeWarsUser: "arv20",
+      completedKatas: [],
+      points: 0
+    },
+    {
+      teamMembers: ["Michael Lindsay", "Anna Peters"],
+      codeWarsUser: "Lindsay.1",
+      completedKatas: [],
+      points: 0
+    },
+    {
+      teamMembers: ["Zach Lang", "Sasha Dehlendorf"],
+      codeWarsUser: "MildRacc",
+      completedKatas: [],
+      points: 0
+    },
+    {
+      teamMembers: ["David Varvas", "Alan Musick"],
+      codeWarsUser: "dvarvas",
+      completedKatas: [],
+      points: 0
+    },
+    {
+      teamMembers: ["Alan Musick", "David Varvas"],
+      codeWarsUser: "musick.2",
+      completedKatas: [],
+      points: 0
+    },
+    {
+      teamMembers: ["Mohamed Tagelsir", "Gaurinanda Sudheesh Lekshmi"],
+      codeWarsUser: "gauri_sl",
+      completedKatas: [],
+      points: 0
+    },
+    {
+      teamMembers: ["Parker Brownlowe", "Alexandra Reaves"],
+      codeWarsUser: "TheGamer1002",
+      completedKatas: [],
+      points: 0
+    },
+    {
+      teamMembers: ["Chris Pomeroy", "Noah Dombrowski"],
+      codeWarsUser: "NullPointerException-1",
+      completedKatas: [],
+      points: 0
+    },
+    {
+      teamMembers: ["Will Fitkin", "Harry Sisson"],
+      codeWarsUser: "WillFitkin",
+      completedKatas: [],
+      points: 0
+    },
+    {
+      teamMembers: ["Victor Middlebrooks", "Matthew Sakol"],
+      codeWarsUser: "MattuzAndVictuzz",
+      completedKatas: [],
+      points: 0
+    },
+    {
+      teamMembers: ["Sakura Henderson", "Dominic Cruz"],
+      codeWarsUser: "SakuraTheTrans",
+      completedKatas: [],
+      points: 0
+    },
+    {
+      teamMembers: ["Adrian Pecourt", "Mariah Dungey"],
+      codeWarsUser: "ape_court",
+      completedKatas: [],
+      points: 0
+    },
+    {
+      teamMembers: ["Austin Chen", "Daniel Barnes"],
+      codeWarsUser: "genjin",
+      completedKatas: [],
+      points: 0
+    },
+    {
+      teamMembers: ["Darius Varvas", "Evan Reinhardt"],
+      codeWarsUser: "ereinhardt",
+      completedKatas: [],
+      points: 0
+    },
+    {
+      teamMembers: ["Felix Prewit", "Onyx Collins"],
+      codeWarsUser: "enemylasagnahh",
+      completedKatas: [],
+      points: 0
+    },
+    {
+      teamMembers: ["Mohamed Abdifatah", "Donovan Mason"],
+      codeWarsUser: "dmason",
+      completedKatas: [],
+      points: 0
+    },
+    
+    {
+      teamMembers: ["Ava Kang", "Elena Zhu"],
+      codeWarsUser: "systemoutprintln",
+      completedKatas: [],
+      points: 0
+    },
+    {
+      teamMembers: ["Jaden Souvanhnalath", "Kai Leach"],
+      codeWarsUser: "kaiwar",
+      completedKatas: [],
+      points: 0
+    },
   ]);
 
   // Observable for the UI to subscribe to
