@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnDestroy, signal, computed, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ScoreBoardItem } from '../score-board-item';
 import { Observable, Subscription, interval } from 'rxjs';
 import { SCOREBOARD_LABELS_CONFIG, SCOREBOARD_UI_CONFIG } from '../config/ui.config';
@@ -7,7 +7,7 @@ import { SCOREBOARD_LABELS_CONFIG, SCOREBOARD_UI_CONFIG } from '../config/ui.con
 @Component({
   selector: 'app-scoreboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './scoreboard.component.html',
   styleUrl: './scoreboard.component.scss'
 })

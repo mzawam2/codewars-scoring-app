@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, catchError, filter, from, map, mergeMap, s
 import { UsersCodeChallenge } from './users-code-challenge';
 import { ScoreBoardItem } from './score-board-item';
 import { ScoreboardComponent } from './scoreboard/scoreboard.component';
-import { CommonModule } from '@angular/common';
+
 import { CodeChallengeResponse } from './code-challenge-response';
 import { EVENT_WINDOW_CONFIG } from './config/event.config';
 import { SCOREBOARD_RUNTIME_CONFIG } from './config/runtime.config';
@@ -20,7 +20,7 @@ interface ChallengeCache {
 
 @Component({
   selector: 'app-root',
-  imports: [ScoreboardComponent, CommonModule],
+  imports: [ScoreboardComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   standalone: true

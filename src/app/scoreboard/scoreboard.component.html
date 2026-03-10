@@ -15,13 +15,15 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of displayItems()">
-          <td>{{ item.rank }}</td>
-          <td>{{ item.teamMembers.join(', ') }}</td>
-          <td>{{ item.codeWarsUser }}</td>
-          <td>{{ item.points }}</td>
-          <td>{{ item.completedKatas.join(', ') }}</td>
-        </tr>
+        @for (item of displayItems(); track item) {
+          <tr>
+            <td>{{ item.rank }}</td>
+            <td>{{ item.teamMembers.join(', ') }}</td>
+            <td>{{ item.codeWarsUser }}</td>
+            <td>{{ item.points }}</td>
+            <td>{{ item.completedKatas.join(', ') }}</td>
+          </tr>
+        }
       </tbody>
     </table>
   </div>
