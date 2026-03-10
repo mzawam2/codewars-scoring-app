@@ -1,0 +1,72 @@
+export const SCORE_RUBRIC_CONFIG: Record<number, number> = {
+  8: 5,
+  7: 10,
+  6: 30,
+  5: 50,
+  4: 75,
+  3: 100,
+  2: 150,
+  1: 200,
+};
+
+export const ACCEPTED_LANGUAGES_CONFIG: string[] = [
+  'java',
+  'javascript',
+  'python',
+];
+
+export interface AcceptedKataConfig {
+  name: string;
+  slug: string;
+}
+
+export const ACCEPTED_KATAS_CONFIG: AcceptedKataConfig[] = [
+  { name: 'Tiny Three-Pass Compiler', slug: 'tiny-three-pass-compiler' },
+  { name: 'Loopover', slug: 'loopover' },
+  { name: 'Puzzle Fighter', slug: 'puzzle-fighter' },
+  { name: 'BECOME IMMORTAL', slug: 'become-immortal' },
+  { name: 'Full Metal Chemist #1: build me...', slug: 'full-metal-chemist-number-1-build-me-dot-dot-dot' },
+  { name: 'Transforming Maze Solver', slug: 'transforming-maze-solver' },
+  { name: 'Game of Go', slug: 'game-of-go' },
+  { name: 'Insane Coloured Triangles', slug: 'insane-coloured-triangles' },
+  { name: 'Evaluate mathematical expression', slug: 'evaluate-mathematical-expression' },
+  { name: 'The Millionth Fibonacci Kata', slug: 'the-millionth-fibonacci-kata' },
+  { name: 'Screen Locking Patterns', slug: 'screen-locking-patterns' },
+  { name: 'Alphabetic Anagrams', slug: 'alphabetic-anagrams' },
+  { name: 'Battleship field validator', slug: 'battleship-field-validator' },
+  { name: 'Simplifying', slug: 'simplifying' },
+  { name: 'Blobservation', slug: 'blobservation' },
+  { name: 'Papers, Please', slug: 'papers-please' },
+  { name: "Conway's Game of Life - Unlimited Edition", slug: 'conways-game-of-life-unlimited-edition' },
+  { name: 'Mahjong - #1 Pure Hand', slug: 'mahjong-number-1-pure-hand' },
+  { name: 'The observed PIN', slug: 'the-observed-pin' },
+  { name: 'Ten-Pin Bowling', slug: 'ten-pin-bowling' },
+  { name: 'Range Extraction', slug: 'range-extraction' },
+  { name: 'Human Readable duration format', slug: 'human-readable-duration-format' },
+  { name: 'So Many Permutations!', slug: 'so-many-permutations' },
+  { name: 'Strings Mix', slug: 'strings-mix' },
+  { name: "Let's Play Darts!", slug: 'lets-play-darts' },
+  { name: 'Four Letter Words ~ Mutations', slug: 'four-letter-words-mutations' },
+  { name: 'Card-Chameleon, a Cipher with Playing Cards', slug: 'card-chameleon-a-cipher-with-playing-cards' },
+  { name: 'Optimized Pathfinding Algorithm', slug: 'optimized-pathfinding-algorithm' },
+  { name: 'First non-repeating character', slug: 'first-non-repeating-character' },
+  { name: 'Nut Farm 2', slug: 'nut-farm-2' },
+  { name: 'Regex Password Validation', slug: 'regex-password-validation' },
+  { name: 'Catch the Bus', slug: 'catch-the-bus' },
+  { name: 'Who likes it?', slug: 'who-likes-it' },
+  { name: 'Tribonacci Sequence', slug: 'tribonacci-sequence' },
+  { name: 'Fibonacci, Tribonacci and friends', slug: 'fibonacci-tribonacci-and-friends' },
+  { name: 'Nut Farm', slug: 'nut-farm' },
+  { name: 'Split Strings', slug: 'split-strings' },
+  { name: 'Emotional Sort ( ︶︿︶)', slug: 'emotional-sort-\u003c' },
+  { name: 'Word a10n (abbreviation)', slug: 'word-a10n-abbreviation' },
+  { name: 'Vowel Count', slug: 'vowel-count' },
+  { name: 'Square Every Digit', slug: 'square-every-digit' },
+  { name: 'Get the Middle Character', slug: 'get-the-middle-character' },
+  { name: "You're a square!", slug: 'youre-a-square' },
+  { name: 'Isograms', slug: 'isograms' },
+  { name: 'Square(n) Sum', slug: 'square-n-sum' },
+  { name: 'String repeat', slug: 'string-repeat' },
+  { name: 'Grasshopper - Summation', slug: 'grasshopper-summation' },
+  { name: 'Remove String Spaces', slug: 'remove-string-spaces' },
+];

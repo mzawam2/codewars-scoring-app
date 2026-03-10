@@ -2,6 +2,7 @@ import { Component, Input, OnInit, OnDestroy, signal, computed, ViewChild, Eleme
 import { CommonModule } from '@angular/common';
 import { ScoreBoardItem } from '../score-board-item';
 import { Observable, Subscription, interval } from 'rxjs';
+import { SCOREBOARD_LABELS_CONFIG, SCOREBOARD_UI_CONFIG } from '../config/ui.config';
 
 @Component({
   selector: 'app-scoreboard',
@@ -15,17 +16,18 @@ export class ScoreboardComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('scoreboardScroll') private scrollContainer?: ElementRef;
 
   displayItems = signal<ScoreBoardItem[]>([]);
-  // sortedItems = computed(() =>
-  //   this.displayItems().sort((a, b) => b.points - a.points)
-  // );
+  readonly lastUpdated = computed(
+    () => this.displayItems()[0]?.time ?? SCOREBOARD_LABELS_CONFIG.emptyLastUpdatedValue
+  );
+  readonly labels = SCOREBOARD_LABELS_CONFIG;
 
   private subscription?: Subscription;
   private scrollSubscription?: Subscription;
   private refreshSubscription?: Subscription;
   private isScrollingPaused = false;
-  private readonly SCROLL_INTERVAL = 24;
-  private readonly SCROLL_STEP = 3; // pixels
-  private readonly REFRESH_INTERVAL = 60000; // 1 minute in milliseconds
+  private readonly SCROLL_INTERVAL = SCOREBOARD_UI_CONFIG.scrollIntervalMs;
+  private readonly SCROLL_STEP = SCOREBOARD_UI_CONFIG.scrollStepPx;
+  private readonly REFRESH_INTERVAL = SCOREBOARD_UI_CONFIG.uiRefreshIntervalMs;
 
   ngOnInit() {
     this.subscribeToItems();
@@ -85,14 +87,14 @@ export class ScoreboardComponent implements OnInit, OnDestroy, AfterViewInit {
       if (atTop) {
         if (loiterStartTime === null) {
           loiterStartTime = Date.now(); // Start loitering at the top
-        } else if (Date.now() - loiterStartTime >= 7000) { // Loiter for 7 seconds
+        } else if (Date.now() - loiterStartTime >= SCOREBOARD_UI_CONFIG.topLoiterMs) {
           atTop = false; // Start scrolling
           loiterStartTime = null;
         }
       } else if (atBottom) {
         if (loiterStartTime === null) {
           loiterStartTime = Date.now(); // Start loitering at the bottom
-        } else if (Date.now() - loiterStartTime >= 3000) { // Loiter for 3 seconds
+        } else if (Date.now() - loiterStartTime >= SCOREBOARD_UI_CONFIG.bottomLoiterMs) {
           scrollElement.scrollTo({ top: 0, behavior: 'instant' });
           atTop = true; // Reset to loiter at the top
           atBottom = false;
