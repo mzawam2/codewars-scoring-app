@@ -28,6 +28,66 @@ npm run test:contract
 
 `npm start` runs preflight validation first (teams exist + challenge validation against accepted languages) in warn-only mode by default. To fail startup on issues, use `npm run start:strict-preflight`. To bypass once, use `npm run start:skip-validation`.
 
+## Developer environment
+
+- Node version is pinned with:
+	- `.nvmrc`
+	- `.node-version`
+
+Recommended local setup:
+
+1. Install Node 22 (LTS)
+2. Run `npm install`
+3. Run `npm start`
+
+### VS Code Dev Container
+
+This repo includes a ready-to-use dev container config:
+
+- [.devcontainer/devcontainer.json](.devcontainer/devcontainer.json)
+
+In VS Code, run **Dev Containers: Reopen in Container**. It will:
+
+- use Node 22 image
+- install dependencies (`npm install`)
+- forward port 4200
+
+## Docker (containerized app)
+
+This repo includes:
+
+- [Dockerfile](Dockerfile)
+- [nginx.conf](nginx.conf)
+- [.dockerignore](.dockerignore)
+
+### Build image
+
+```bash
+docker build -t codewars-scoring-app:latest .
+```
+
+### Run container
+
+```bash
+docker run --rm -p 8080:80 codewars-scoring-app:latest
+```
+
+Then open http://localhost:8080.
+
+### Docker Compose
+
+Use the included compose file for one-command startup:
+
+```bash
+docker compose up --build -d
+```
+
+Stop it with:
+
+```bash
+docker compose down
+```
+
 ## Codewars APIs used by this app
 
 Detailed API contract docs are in [docs/api-integration.md](docs/api-integration.md), including:
