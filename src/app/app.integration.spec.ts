@@ -34,7 +34,7 @@ describe('AppComponent + UserService (integration)', () => {
     component.scoreBoardItems$.pipe(take(1)).subscribe((items: any[]) => {
       expect(items.length).toBe(1);
       expect(items[0].points).toBe(200);
-      expect(items[0].completedKatas).toEqual(['Nut Farm']);
+      expect(items[0].completedKatas).toEqual(['Reversed Strings']);
       expect(items[0].rank).toBe(1);
       done();
     });
@@ -45,21 +45,21 @@ describe('AppComponent + UserService (integration)', () => {
       totalItems: 1,
       data: [
         {
-          id: 'accepted-1',
-          name: 'Nut Farm',
-          slug: 'nut-farm',
+          id: '5168bb5dfe9a00b126000018',
+          name: 'Reversed Strings',
+          slug: '5168bb5dfe9a00b126000018',
           completedLanguages: ['javascript'],
           completedAt: '2025-04-11T12:00:00.000Z'
         }
       ]
     });
 
-    const challengeReq = httpMock.expectOne('https://www.codewars.com/api/v1/code-challenges/accepted-1');
+    const challengeReq = httpMock.expectOne('https://www.codewars.com/api/v1/code-challenges/5168bb5dfe9a00b126000018');
     challengeReq.flush({
-      id: 'accepted-1',
-      name: 'Nut Farm',
-      slug: 'nut-farm',
-      url: 'https://www.codewars.com/kata/nut-farm',
+      id: '5168bb5dfe9a00b126000018',
+      name: 'Reversed Strings',
+      slug: '5168bb5dfe9a00b126000018',
+      url: 'https://www.codewars.com/kata/5168bb5dfe9a00b126000018',
       category: 'algorithms',
       description: 'x',
       tags: [],
@@ -106,21 +106,21 @@ describe('AppComponent + UserService (integration)', () => {
       totalItems: 1,
       data: [
         {
-          id: 'accepted-2',
-          name: 'Nut Farm',
-          slug: 'nut-farm',
+          id: '514b92a657cdc65150000006',
+          name: 'Multiples of 3 or 5',
+          slug: '514b92a657cdc65150000006',
           completedLanguages: ['javascript'],
           completedAt: '2025-04-11T12:00:00.000Z'
         }
       ]
     });
 
-    const challengeReq = httpMock.expectOne('https://www.codewars.com/api/v1/code-challenges/accepted-2');
+    const challengeReq = httpMock.expectOne('https://www.codewars.com/api/v1/code-challenges/514b92a657cdc65150000006');
     challengeReq.flush({
-      id: 'accepted-2',
-      name: 'Nut Farm',
-      slug: 'nut-farm',
-      url: 'https://www.codewars.com/kata/nut-farm',
+      id: '514b92a657cdc65150000006',
+      name: 'Multiples of 3 or 5',
+      slug: '514b92a657cdc65150000006',
+      url: 'https://www.codewars.com/kata/514b92a657cdc65150000006',
       category: 'algorithms',
       description: 'x',
       tags: [],

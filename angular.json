@@ -56,6 +56,12 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "mock": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "index": "src/index.mock.html"
             }
           },
           "defaultConfiguration": "production"
@@ -68,6 +74,9 @@
             },
             "development": {
               "buildTarget": "ScoreBoard:build:development"
+            },
+            "mock": {
+              "buildTarget": "ScoreBoard:build:mock"
             }
           },
           "defaultConfiguration": "development"

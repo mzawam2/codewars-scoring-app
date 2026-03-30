@@ -11,10 +11,11 @@ Use this if Codewars changes base host/path in the future.
 
 ## `event.config.ts`
 
-- `EVENT_WINDOW_CONFIG.startIsoUtc`
-- `EVENT_WINDOW_CONFIG.endIsoUtc`
+- `EVENT_WINDOW_CONFIG.timeZone`
+- `EVENT_WINDOW_CONFIG.startIsoEastern`
+- `EVENT_WINDOW_CONFIG.endIsoEastern`
 
-Use full ISO UTC timestamps (`YYYY-MM-DDTHH:mm:ssZ`) to avoid timezone ambiguity.
+Use full ISO timestamps with an Eastern offset (for example `YYYY-MM-DDTHH:mm:ss-04:00`) to keep event configuration in ET.
 
 ## `teams.config.ts`
 

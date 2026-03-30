@@ -9,10 +9,6 @@ export const SCOREBOARD_TEAMS_CONFIG: TeamConfig[] = [
     codeWarsUser: 'css99',
   },
   {
-    teamMembers: ['Aarav Kolgaonkar', 'Colin Shaw'],
-    codeWarsUser: 'arv20',
-  },
-  {
     teamMembers: ['Michael Lindsay', 'Anna Peters'],
     codeWarsUser: 'Lindsay.1',
   },

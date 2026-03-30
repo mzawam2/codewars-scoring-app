@@ -14,9 +14,9 @@ test.describe('Scoreboard E2E', () => {
             totalItems: 1,
             data: [
               {
-                id: 'accepted-e2e-1',
-                name: 'Nut Farm',
-                slug: 'nut-farm',
+                id: '5168bb5dfe9a00b126000018',
+                name: 'Reversed Strings',
+                slug: '5168bb5dfe9a00b126000018',
                 completedLanguages: ['javascript'],
                 completedAt: '2025-04-11T10:00:00.000Z'
               }
@@ -38,10 +38,10 @@ test.describe('Scoreboard E2E', () => {
         status: 200,
         contentType: 'application/json',
         body: JSON.stringify({
-          id: 'accepted-e2e-1',
-          name: 'Nut Farm',
-          slug: 'nut-farm',
-          url: 'https://www.codewars.com/kata/nut-farm',
+          id: '5168bb5dfe9a00b126000018',
+          name: 'Reversed Strings',
+          slug: '5168bb5dfe9a00b126000018',
+          url: 'https://www.codewars.com/kata/5168bb5dfe9a00b126000018',
           category: 'algorithms',
           description: 'x',
           tags: [],
@@ -69,7 +69,8 @@ test.describe('Scoreboard E2E', () => {
       'Team Members',
       'CodeWars User',
       'Points',
-      'Completed Katas'
+      'Total Katas Completed',
+      'Most Recently Completed Kata'
     ]);
   });
 
@@ -80,14 +81,15 @@ test.describe('Scoreboard E2E', () => {
 
     const cssRow = page.locator('tbody tr', { hasText: 'css99' }).first();
     await expect(cssRow).toBeVisible();
-    await expect(cssRow).toContainText('Nut Farm');
+    await expect(cssRow).toContainText('Reversed Strings');
     await expect(cssRow).toContainText('200');
+    await expect(cssRow).toContainText('1');
   });
 
   test('keeps rendering when some users have no results', async ({ page }) => {
     await page.goto('/');
 
-    await expect(page.locator('tbody tr')).toHaveCount(21);
+    await expect(page.locator('tbody tr')).toHaveCount(20);
     await expect(page.locator('tbody tr', { hasText: 'css99' }).first()).toBeVisible();
   });
 });

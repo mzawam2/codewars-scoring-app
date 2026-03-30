@@ -12,10 +12,10 @@ describe('AppComponent (unit)', () => {
   let userServiceSpy: jasmine.SpyObj<UserService>;
 
   const acceptedChallenge: CodeChallengeResponse = {
-    id: 'accepted-1',
-    name: 'Nut Farm',
-    slug: 'nut-farm',
-    url: 'https://www.codewars.com/kata/nut-farm',
+    id: '5168bb5dfe9a00b126000018',
+    name: 'Reversed Strings',
+    slug: '5168bb5dfe9a00b126000018',
+    url: 'https://www.codewars.com/kata/5168bb5dfe9a00b126000018',
     category: 'algorithms',
     description: 'desc',
     tags: [],
@@ -58,7 +58,7 @@ describe('AppComponent (unit)', () => {
 
   it('should return cached challenge without service call', async () => {
     localStorage.setItem(
-      SCOREBOARD_RUNTIME_CONFIG.challengeCacheKey,
+      `${SCOREBOARD_RUNTIME_CONFIG.challengeCacheKey}:live`,
       JSON.stringify({ [acceptedChallenge.id]: acceptedChallenge })
     );
 
@@ -72,11 +72,11 @@ describe('AppComponent (unit)', () => {
     userServiceSpy.getCodeChallenge.and.returnValue(of(acceptedChallenge));
 
     const result = await firstValueFrom((component as any).getCachedChallenge(acceptedChallenge.id));
-    const cache = JSON.parse(localStorage.getItem(SCOREBOARD_RUNTIME_CONFIG.challengeCacheKey) || '{}');
+    const cache = JSON.parse(localStorage.getItem(`${SCOREBOARD_RUNTIME_CONFIG.challengeCacheKey}:live`) || '{}');
 
     expect(result).toEqual(acceptedChallenge);
     expect(userServiceSpy.getCodeChallenge).toHaveBeenCalledWith(acceptedChallenge.id);
-    expect(cache[acceptedChallenge.id].name).toBe('Nut Farm');
+    expect(cache[acceptedChallenge.id].name).toBe('Reversed Strings');
   });
 
   it('should score only accepted katas completed within event window', async () => {
@@ -93,9 +93,9 @@ describe('AppComponent (unit)', () => {
         totalItems: 3,
         data: [
           {
-            id: 'accepted-1',
-            name: 'Nut Farm',
-            slug: 'nut-farm',
+            id: '5168bb5dfe9a00b126000018',
+            name: 'Reversed Strings',
+            slug: '5168bb5dfe9a00b126000018',
             completedLanguages: ['javascript'],
             completedAt: '2025-04-11T01:00:00.000Z' as any
           },
@@ -108,8 +108,8 @@ describe('AppComponent (unit)', () => {
           },
           {
             id: 'out-of-window',
-            name: 'Nut Farm',
-            slug: 'nut-farm',
+            name: 'Reversed Strings',
+            slug: '5168bb5dfe9a00b126000018',
             completedLanguages: ['javascript'],
             completedAt: '2025-04-12T00:30:00.000Z' as any
           }
@@ -118,7 +118,7 @@ describe('AppComponent (unit)', () => {
     );
 
     userServiceSpy.getCodeChallenge.and.callFake((id: string) => {
-      if (id === 'accepted-1') {
+      if (id === '5168bb5dfe9a00b126000018') {
         return of(acceptedChallenge);
       }
       if (id === 'not-accepted-1') {
@@ -130,7 +130,7 @@ describe('AppComponent (unit)', () => {
     const result = await firstValueFrom((component as any).loadTeamData(team)) as ScoreBoardItem;
 
     expect(result.points).toBe(200);
-    expect(result.completedKatas).toEqual(['Nut Farm']);
+    expect(result.completedKatas).toEqual(['Reversed Strings']);
   });
 
   it('should not score accepted katas completed only in non-accepted languages', async () => {
@@ -147,9 +147,9 @@ describe('AppComponent (unit)', () => {
         totalItems: 1,
         data: [
           {
-            id: 'accepted-1',
-            name: 'Nut Farm',
-            slug: 'nut-farm',
+            id: '5168bb5dfe9a00b126000018',
+            name: 'Reversed Strings',
+            slug: '5168bb5dfe9a00b126000018',
             completedLanguages: ['ruby'],
             completedAt: '2025-04-11T01:00:00.000Z' as any
           }
@@ -180,9 +180,9 @@ describe('AppComponent (unit)', () => {
         totalItems: 1,
         data: [
           {
-            id: 'accepted-1',
-            name: 'Nut Farm',
-            slug: 'nut-farm',
+            id: '5168bb5dfe9a00b126000018',
+            name: 'Reversed Strings',
+            slug: '5168bb5dfe9a00b126000018',
             completedLanguages: ['JavaScript'],
             completedAt: '2025-04-11T01:00:00.000Z' as any
           }
@@ -195,7 +195,7 @@ describe('AppComponent (unit)', () => {
     const result = await firstValueFrom((component as any).loadTeamData(team)) as ScoreBoardItem;
 
     expect(result.points).toBe(200);
-    expect(result.completedKatas).toEqual(['Nut Farm']);
+    expect(result.completedKatas).toEqual(['Reversed Strings']);
   });
 
   it('should assign rank undefined when points are tied', async () => {
@@ -206,7 +206,7 @@ describe('AppComponent (unit)', () => {
     ]);
 
     spyOn<any>(component, 'loadTeamData').and.callFake((team: any) =>
-      of({ ...team, points: 50, completedKatas: ['Nut Farm'] })
+      of({ ...team, points: 50, completedKatas: ['Reversed Strings'] })
     );
 
     const result = await firstValueFrom((component as any).loadScoreboardData()) as ScoreBoardItem[];
@@ -249,9 +249,9 @@ describe('AppComponent (unit)', () => {
           totalItems: 2,
           data: [
             {
-              id: 'accepted-1',
-              name: 'Nut Farm',
-              slug: 'nut-farm',
+              id: '5168bb5dfe9a00b126000018',
+              name: 'Reversed Strings',
+              slug: '5168bb5dfe9a00b126000018',
               completedLanguages: ['javascript'],
               completedAt: '2025-04-11T01:00:00.000Z' as any
             }
@@ -264,9 +264,9 @@ describe('AppComponent (unit)', () => {
         totalItems: 2,
         data: [
           {
-            id: 'accepted-2',
-            name: 'Nut Farm',
-            slug: 'nut-farm',
+            id: '514b92a657cdc65150000006',
+            name: 'Multiples of 3 or 5',
+            slug: '514b92a657cdc65150000006',
             completedLanguages: ['javascript'],
             completedAt: '2025-04-11T02:00:00.000Z' as any
           }
@@ -312,9 +312,9 @@ describe('AppComponent (unit)', () => {
         totalItems: 1,
         data: [
           {
-            id: 'accepted-1',
-            name: 'Nut Farm',
-            slug: 'nut-farm',
+            id: '5168bb5dfe9a00b126000018',
+            name: 'Reversed Strings',
+            slug: '5168bb5dfe9a00b126000018',
             completedLanguages: ['javascript'],
             completedAt: '2025-04-11T01:00:00.000Z' as any
           }
@@ -340,10 +340,10 @@ describe('AppComponent (unit)', () => {
     const initial = (component as any).getCache();
     expect(initial).toEqual({});
 
-    (component as any).updateCache('accepted-1', acceptedChallenge);
+    (component as any).updateCache(acceptedChallenge.id, acceptedChallenge);
     const cache = (component as any).getCache();
 
-    expect(cache['accepted-1'].name).toBe('Nut Farm');
+    expect(cache[acceptedChallenge.id].name).toBe('Reversed Strings');
   });
 
   it('should tolerate team fetch errors when enabled', async () => {
@@ -375,9 +375,9 @@ describe('AppComponent (unit)', () => {
         totalItems: 1,
         data: [
           {
-            id: 'accepted-1',
-            name: 'Nut Farm',
-            slug: 'nut-farm',
+            id: '5168bb5dfe9a00b126000018',
+            name: 'Reversed Strings',
+            slug: '5168bb5dfe9a00b126000018',
             completedLanguages: ['javascript'],
             completedAt: '2025-04-11T01:00:00.000Z' as any
           }
@@ -415,9 +415,9 @@ describe('AppComponent (unit)', () => {
         totalItems: 1,
         data: [
           {
-            id: 'accepted-1',
-            name: 'Nut Farm',
-            slug: 'nut-farm',
+            id: '5168bb5dfe9a00b126000018',
+            name: 'Reversed Strings',
+            slug: '5168bb5dfe9a00b126000018',
             completedLanguages: ['javascript'],
             completedAt: '2025-04-11T01:00:00.000Z' as any
           }
@@ -427,7 +427,7 @@ describe('AppComponent (unit)', () => {
     userServiceSpy.getCodeChallenge.and.returnValue(of(acceptedChallenge));
 
     const result = await firstValueFrom((component as any).loadTeamData(team)) as ScoreBoardItem;
-    expect(result.completedKatas).toEqual(['Nut Farm']);
+    expect(result.completedKatas).toEqual(['Reversed Strings']);
   });
 
   it('should fallback to zero points when kata rank is not in rubric map', async () => {
@@ -442,9 +442,9 @@ describe('AppComponent (unit)', () => {
         totalItems: 1,
         data: [
           {
-            id: 'accepted-1',
-            name: 'Nut Farm',
-            slug: 'nut-farm',
+            id: '5168bb5dfe9a00b126000018',
+            name: 'Reversed Strings',
+            slug: '5168bb5dfe9a00b126000018',
             completedLanguages: ['javascript'],
             completedAt: '2025-04-11T01:00:00.000Z' as any
           }
@@ -461,7 +461,7 @@ describe('AppComponent (unit)', () => {
     })) as ScoreBoardItem;
 
     expect(result.points).toBe(0);
-    expect(result.completedKatas).toEqual(['Nut Farm']);
+    expect(result.completedKatas).toEqual(['Reversed Strings']);
   });
 
   it('should use top-level fallback item when tolerant mode is on and detail fetch throws', async () => {
@@ -476,9 +476,9 @@ describe('AppComponent (unit)', () => {
         totalItems: 1,
         data: [
           {
-            id: 'accepted-1',
-            name: 'Nut Farm',
-            slug: 'nut-farm',
+            id: '5168bb5dfe9a00b126000018',
+            name: 'Reversed Strings',
+            slug: '5168bb5dfe9a00b126000018',
             completedLanguages: ['javascript'],
             completedAt: '2025-04-11T01:00:00.000Z' as any
           }
@@ -499,5 +499,68 @@ describe('AppComponent (unit)', () => {
 
     SCOREBOARD_RUNTIME_CONFIG.tolerateTeamFetchErrors = previousTeamTolerance;
     SCOREBOARD_RUNTIME_CONFIG.tolerateChallengeDetailErrors = previousDetailTolerance;
+  });
+
+  it('should use mock cache namespace when mock mode is enabled', async () => {
+    const mockFixture = TestBed.createComponent(AppComponent);
+    const mockComponent = mockFixture.componentInstance as any;
+    spyOn(mockComponent.dataModeService, 'isMockMode').and.returnValue(true);
+
+    userServiceSpy.getCodeChallenge.and.returnValue(of(acceptedChallenge));
+
+    await firstValueFrom(mockComponent.getCachedChallenge(acceptedChallenge.id));
+    const mockCache = localStorage.getItem(`${SCOREBOARD_RUNTIME_CONFIG.challengeCacheKey}:mock`);
+
+    expect(mockCache).toContain('Reversed Strings');
+  });
+
+  it('should keep existing latestCompletedKata when next completion is older', async () => {
+    const team = {
+      teamMembers: ['A'],
+      codeWarsUser: 'u1',
+      completedKatas: [],
+      points: 0
+    };
+
+    userServiceSpy.getCodeChallengesByUser.and.returnValue(
+      of({
+        totalPages: 1,
+        totalItems: 2,
+        data: [
+          {
+            id: '5168bb5dfe9a00b126000018',
+            name: 'Reversed Strings',
+            slug: '5168bb5dfe9a00b126000018',
+            completedLanguages: ['javascript'],
+            completedAt: '2025-04-11T10:00:00.000Z' as any
+          },
+          {
+            id: '514b92a657cdc65150000006',
+            name: 'Multiples of 3 or 5',
+            slug: '514b92a657cdc65150000006',
+            completedLanguages: ['javascript'],
+            completedAt: '2025-04-11T09:00:00.000Z' as any
+          }
+        ]
+      })
+    );
+
+    userServiceSpy.getCodeChallenge.and.callFake((id: string) =>
+      of(
+        id === '514b92a657cdc65150000006'
+          ? {
+            ...acceptedChallenge,
+            id,
+            name: 'Multiples of 3 or 5',
+            slug: '514b92a657cdc65150000006',
+            rank: { id: -8, name: '8 kyu', color: 'white' }
+          }
+          : acceptedChallenge
+      )
+    );
+
+    const result = await firstValueFrom((component as any).loadTeamData(team)) as ScoreBoardItem;
+
+    expect(result.latestCompletedKata?.name).toBe('Reversed Strings');
   });
 });

@@ -6,6 +6,9 @@
     "start": "npm run validate:preflight && ng serve",
     "start:skip-validation": "ng serve",
     "start:strict-preflight": "set STRICT_PREFLIGHT_VALIDATION=true&& npm run validate:preflight && ng serve",
+    "start:mock": "ng serve --configuration mock",
+    "start:mock:skip-validation": "ng serve --configuration mock",
+    "mock": "npm run start:mock",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
@@ -13,7 +16,8 @@
     "test:integration": "ng test --watch=false --include=src/app/**/*.integration.spec.ts",
     "test:e2e": "playwright test",
     "test:contract": "node ./scripts/contract-tests.mjs",
-    "validate:preflight": "tsx ./scripts/preflight-validate.ts"
+    "validate:preflight": "tsx ./scripts/preflight-validate.ts",
+    "kata:details": "tsx ./scripts/kata-details.ts"
   },
   "engines": {
     "node": ">=22 <23",

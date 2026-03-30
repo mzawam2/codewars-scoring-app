@@ -1,13 +1,15 @@
 import { Component, Input, OnInit, OnDestroy, signal, computed, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 import { ScoreBoardItem } from '../score-board-item';
 import { Observable, Subscription, interval } from 'rxjs';
 import { SCOREBOARD_LABELS_CONFIG, SCOREBOARD_UI_CONFIG } from '../config/ui.config';
+import { EVENT_WINDOW_CONFIG } from '../config/event.config';
 
 @Component({
   selector: 'app-scoreboard',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './scoreboard.component.html',
   styleUrl: './scoreboard.component.scss'
 })
@@ -20,6 +22,7 @@ export class ScoreboardComponent implements OnInit, OnDestroy, AfterViewInit {
     () => this.displayItems()[0]?.time ?? SCOREBOARD_LABELS_CONFIG.emptyLastUpdatedValue
   );
   readonly labels = SCOREBOARD_LABELS_CONFIG;
+  readonly displayTimeZone = EVENT_WINDOW_CONFIG.timeZone;
 
   private subscription?: Subscription;
   private scrollSubscription?: Subscription;

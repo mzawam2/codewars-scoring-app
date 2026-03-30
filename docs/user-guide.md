@@ -8,7 +8,7 @@ This app displays a live scoreboard for a hackathon by reading Codewars completi
 
 - **Team**: A pair/group mapped to one Codewars account.
 - **Accepted kata**: Only kata in the approved list are scored.
-- **Event window**: Only completions between start/end timestamps are counted.
+- **Event window (ET)**: Only completions between the configured Eastern Time start/end timestamps are counted.
 - **Rubric**: Points assigned by kata rank.
 
 ## What users see
@@ -35,7 +35,7 @@ This app displays a live scoreboard for a hackathon by reading Codewars completi
 ## Updating for a new event (quick path)
 
 1. Update teams in `src/app/config/teams.config.ts`.
-2. Update event timestamps in `src/app/config/event.config.ts`.
+2. Update Eastern Time event timestamps in `src/app/config/event.config.ts`.
 3. Update accepted katas (`name` + `slug`) and rubric in `src/app/config/scoring.config.ts`.
 4. Run validation/tests (`npm run validate:preflight`, `npm test`, `npm run test:e2e`).
 5. Launch (`npm start`) and validate rows visually.

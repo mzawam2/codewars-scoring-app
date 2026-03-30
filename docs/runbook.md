@@ -5,7 +5,7 @@ This runbook is for event-day operators and maintainers.
 ## 1) Pre-event checklist (T-1 day)
 
 1. Confirm team roster (`src/app/config/teams.config.ts`).
-2. Confirm event window UTC timestamps (`src/app/config/event.config.ts`).
+2. Confirm event window Eastern Time timestamps (`src/app/config/event.config.ts`).
 3. Confirm accepted kata list and rubric (`src/app/config/scoring.config.ts`).
 4. Validate at least one sample user has expected completions in window.
 5. Run quality gates:
@@ -39,7 +39,7 @@ Every 15–30 minutes:
 ### Symptom: No teams have scores
 
 Actions:
-1. Verify event window timestamps are correct and UTC.
+1. Verify event window timestamps are correct and in Eastern Time.
 2. Validate one username with direct API request.
 3. Verify accepted kata list is not empty/mismatched.
 4. Restart app and clear browser localStorage cache if needed.

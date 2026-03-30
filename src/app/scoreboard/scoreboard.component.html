@@ -11,7 +11,8 @@
           <th>Team Members</th>
           <th>CodeWars User</th>
           <th>Points</th>
-          <th>Completed Katas</th>
+          <th>Total Katas Completed</th>
+          <th>Most Recently Completed Kata</th>
         </tr>
       </thead>
       <tbody>
@@ -21,7 +22,15 @@
             <td>{{ item.teamMembers.join(', ') }}</td>
             <td>{{ item.codeWarsUser }}</td>
             <td>{{ item.points }}</td>
-            <td>{{ item.completedKatas.join(', ') }}</td>
+            <td>{{ item.totalCompletedKatas ?? item.completedKatas.length }}</td>
+            <td>
+              @if (item.latestCompletedKata) {
+                {{ item.latestCompletedKata.name }} ({{ item.latestCompletedKata.difficulty }}) -
+                {{ item.latestCompletedKata.completedAt | date:'shortTime':displayTimeZone }}
+              } @else {
+                N/A
+              }
+            </td>
           </tr>
         }
       </tbody>

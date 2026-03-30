@@ -11,11 +11,17 @@ import { SCOREBOARD_RUNTIME_CONFIG } from './config/runtime.config';
 import { ACCEPTED_KATAS_CONFIG, ACCEPTED_LANGUAGES_CONFIG, SCORE_RUBRIC_CONFIG } from './config/scoring.config';
 import { SCOREBOARD_TEAMS_CONFIG } from './config/teams.config';
 import { APP_DISPLAY_CONFIG } from './config/app-display.config';
+import { DataModeService } from './services/data-mode.service';
 
 const CACHE_KEY = SCOREBOARD_RUNTIME_CONFIG.challengeCacheKey;
 
 interface ChallengeCache {
   [key: string]: CodeChallengeResponse & { completedAt: string };
+}
+
+interface CompletedChallengeDetail {
+  userChallenge: UsersCodeChallenge;
+  challenge: CodeChallengeResponse;
 }
 
 @Component({
@@ -28,6 +34,7 @@ interface ChallengeCache {
 export class AppComponent implements OnDestroy {
   title = APP_DISPLAY_CONFIG.title;
   private readonly userService = inject(UserService);
+  private readonly dataModeService = inject(DataModeService);
   private kataPoints = new Map<number, number>(
     Object.entries(SCORE_RUBRIC_CONFIG).map(([rank, points]) => [Number(rank), points])
   );
@@ -41,6 +48,7 @@ export class AppComponent implements OnDestroy {
     SCOREBOARD_TEAMS_CONFIG.map(team => ({
       ...team,
       completedKatas: [],
+      totalCompletedKatas: 0,
       points: 0,
     }))
   );
@@ -62,8 +70,12 @@ export class AppComponent implements OnDestroy {
     this.destroy$.complete();
   }
 
+  private getCacheKey(): string {
+    return `${CACHE_KEY}:${this.dataModeService.isMockMode() ? 'mock' : 'live'}`;
+  }
+
   private getCache(): ChallengeCache {
-    const cached = localStorage.getItem(CACHE_KEY);
+    const cached = localStorage.getItem(this.getCacheKey());
     return cached ? JSON.parse(cached) : {};
   }
 
@@ -73,7 +85,7 @@ export class AppComponent implements OnDestroy {
       ...currentCache,
       [id]: challenge
     };
-    localStorage.setItem(CACHE_KEY, JSON.stringify(updatedCache));
+    localStorage.setItem(this.getCacheKey(), JSON.stringify(updatedCache));
   }
 
   private getCachedChallenge(id: string): Observable<CodeChallengeResponse> {
@@ -118,8 +130,8 @@ export class AppComponent implements OnDestroy {
   }
 
   private loadTeamData(team: ScoreBoardItem): Observable<ScoreBoardItem> {
-    const startDate = new Date(EVENT_WINDOW_CONFIG.startIsoUtc).getTime();
-    const endDate = new Date(EVENT_WINDOW_CONFIG.endIsoUtc).getTime();
+    const startDate = new Date(EVENT_WINDOW_CONFIG.startIsoEastern).getTime();
+    const endDate = new Date(EVENT_WINDOW_CONFIG.endIsoEastern).getTime();
 
     const fetchAllPages = (page: number): Observable<UsersCodeChallenge[]> => {
       return this.userService.getCodeChallengesByUser(team.codeWarsUser, page).pipe(
@@ -147,21 +159,39 @@ export class AppComponent implements OnDestroy {
         from(allChallenges).pipe(
           mergeMap((codeChallenge: UsersCodeChallenge) =>
             this.getCachedChallenge(codeChallenge.id).pipe(
+              map(challenge => ({ userChallenge: codeChallenge, challenge })),
               catchError(err => (SCOREBOARD_RUNTIME_CONFIG.tolerateChallengeDetailErrors ? of(undefined) : throwError(() => err)))
             )
           ),
-          filter((challenge): challenge is CodeChallengeResponse => !!challenge),
-          reduce((acc: ScoreBoardItem, challenge) => {
-            const isAcceptedKata = this.acceptedKataSlugs.has(challenge.slug);
+          filter((item): item is CompletedChallengeDetail => !!item),
+          reduce((acc: ScoreBoardItem, item) => {
+            const { challenge, userChallenge } = item;
+            const isAcceptedKata = this.acceptedKataSlugs.has(challenge.id) || this.acceptedKataSlugs.has(challenge.slug);
             if (isAcceptedKata) {
-              const displayName = this.acceptedKataNameBySlug.get(challenge.slug)
+              const displayName = this.acceptedKataNameBySlug.get(challenge.id)
+                ?? this.acceptedKataNameBySlug.get(challenge.slug)
                 ?? challenge.name;
               const kataPts = this.kataPoints.get(Math.abs(challenge.rank.id)) || 0;
+              const completedAt = new Date(userChallenge.completedAt as unknown as string);
+              const completedAtIso = completedAt.toISOString();
+              const existingLatest = acc.latestCompletedKata
+                ? new Date(acc.latestCompletedKata.completedAt)
+                : undefined;
+              const isLatest = !existingLatest || completedAt > existingLatest;
+
               return {
                 ...acc,
                 completedKatas: [...acc.completedKatas, displayName],
+                totalCompletedKatas: (acc.totalCompletedKatas ?? 0) + 1,
+                latestCompletedKata: isLatest
+                  ? {
+                    name: displayName,
+                    difficulty: challenge.rank.name,
+                    completedAt: completedAtIso,
+                  }
+                  : acc.latestCompletedKata,
                 points: acc.points + kataPts,
-                time: `${new Date().getHours().toString().padStart(2, '0')}:${new Date().getMinutes().toString().padStart(2, '0')}`
+                time: this.getCurrentEasternTime24()
               };
             }
             return acc; // Skip other katas
@@ -174,5 +204,18 @@ export class AppComponent implements OnDestroy {
           : throwError(() => err)
       ))
     );
+  }
+
+  private getCurrentEasternTime24(): string {
+    const parts = new Intl.DateTimeFormat('en-US', {
+      timeZone: EVENT_WINDOW_CONFIG.timeZone,
+      hour: '2-digit',
+      minute: '2-digit',
+      hourCycle: 'h23',
+    }).formatToParts(new Date());
+
+    const hours = parts.find((part) => part.type === 'hour')?.value ?? '00';
+    const minutes = parts.find((part) => part.type === 'minute')?.value ?? '00';
+    return `${hours}:${minutes}`;
   }
 }

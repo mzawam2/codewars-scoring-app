@@ -5,7 +5,7 @@ Fast checklist for running the scoreboard during the event.
 ## 0) One-time prep (before event day)
 
 - Confirm teams in `src/app/config/teams.config.ts`
-- Confirm event window in `src/app/config/event.config.ts` (UTC)
+- Confirm event window in `src/app/config/event.config.ts` (Eastern Time)
 - Confirm accepted kata list/rubric in `src/app/config/scoring.config.ts` (`name` + `slug` per kata)
 - Run:
 
@@ -46,7 +46,7 @@ Every 15–30 minutes:
 
 ### Symptom: all teams at 0
 
-- Verify event window timestamps (UTC)
+- Verify event window timestamps (Eastern Time)
 - Verify API availability and internet connectivity
 - Verify accepted kata list is not empty/mismatched
 
