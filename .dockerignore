@@ -1,0 +1,13 @@
+node_modules
+npm-debug.log
+.git
+.gitignore
+.vscode
+.devcontainer
+coverage
+dist
+playwright-report
+test-results
+*.local
+Dockerfile*
+README.md

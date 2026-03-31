@@ -1,0 +1,10 @@
+<div class="admin-container">
+  <h1>Admin - Teams</h1>
+  <div class="teams-grid">
+    <div *ngFor="let team of teams" class="team-card">
+      <h2 (click)="selectTeam(team.originalIndex)" class="team-name">{{ team.codeWarsUser }}</h2>
+      <p class="members">{{ team.teamMembers.join(', ') }}</p>
+      <button class="view-btn" (click)="selectTeam(team.originalIndex)">View Completed Katas →</button>
+    </div>
+  </div>
+</div>

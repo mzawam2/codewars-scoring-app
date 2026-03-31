@@ -1,0 +1,70 @@
+<div class="team-detail-container">
+  <div class="header">
+    <button class="back-btn" (click)="goBack()">← Back to Teams</button>
+    <h1>{{ teamName }}</h1>
+    <p class="team-members">Members: {{ teamMembers.join(', ') }}</p>
+  </div>
+
+  <div class="content">
+    <div *ngIf="loading" class="loading">Loading completed katas...</div>
+
+    <div *ngIf="error" class="error">{{ error }}</div>
+
+    <div *ngIf="!loading && !error && filteredKatas.length === 0" class="empty">
+      No completed katas found.
+    </div>
+
+    <div *ngIf="!loading && !error && filteredKatas.length > 0" class="table-wrapper">
+      <table class="katas-table">
+        <thead>
+          <tr>
+            <th (click)="sort('name')" class="sortable">
+              Name {{ getSortIndicator('name') }}
+            </th>
+            <th (click)="sort('completedAt')" class="sortable">
+              Completed At {{ getSortIndicator('completedAt') }}
+            </th>
+            <th (click)="sort('difficulty')" class="sortable">
+              Difficulty {{ getSortIndicator('difficulty') }}
+            </th>
+            <th (click)="sort('points')" class="sortable">
+              Points {{ getSortIndicator('points') }}
+            </th>
+            <th>Languages</th>
+            <th>Languages Count</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let kata of filteredKatas" class="kata-row">
+            <td class="kata-name">
+              <a [href]="'https://www.codewars.com/kata/' + kata.slug" target="_blank">
+                {{ kata.name }}
+              </a>
+            </td>
+            <td class="completed-at">
+              {{ kata.completedAt | date: 'short':displayTimeZone }}
+            </td>
+            <td class="difficulty">
+              {{ kata.difficulty }}
+            </td>
+            <td class="points">
+              {{ kata.points }}
+            </td>
+            <td class="languages">
+              <span *ngFor="let lang of kata.completedLanguages; let last = last" class="language-badge">
+                {{ lang }}<span *ngIf="!last">, </span>
+              </span>
+            </td>
+            <td class="language-count">
+              {{ kata.completedLanguages.length }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div *ngIf="!loading && !error && filteredKatas.length > 0" class="summary">
+      Total Completed: {{ filteredKatas.length }} | Total Points: {{ totalPoints }}
+    </div>
+  </div>
+</div>

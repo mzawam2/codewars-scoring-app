@@ -1,59 +1,119 @@
-# ScoreBoard
+# Hackathon ScoreBoard
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.2.
+Reliable event scoreboard powered by Codewars API data.
 
-## Development server
+This repository now includes a **multi-page guide + runbook** for operators, maintainers, and developers.
 
-To start a local development server, run:
+## Start here
 
-```bash
-ng serve
-```
+- User Guide: [docs/user-guide.md](docs/user-guide.md)
+- Operator Quick Card: [docs/operator-quick-card.md](docs/operator-quick-card.md)
+- Operations Runbook: [docs/runbook.md](docs/runbook.md)
+- Configuration Reference: [docs/configuration-reference.md](docs/configuration-reference.md)
+- API Integration Reference: [docs/api-integration.md](docs/api-integration.md)
+- Testing & Quality: [docs/testing-and-quality.md](docs/testing-and-quality.md)
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Quick commands
 
 ```bash
-ng generate --help
+npm install
+npm run validate:preflight
+npm start
+npm run start:skip-validation
+npm test
+npm run test:coverage
+npm run test:e2e
+npm run test:contract
 ```
 
-## Building
+`npm start` runs preflight validation first (teams exist + challenge validation against accepted languages) in warn-only mode by default. To fail startup on issues, use `npm run start:strict-preflight`. To bypass once, use `npm run start:skip-validation`.
 
-To build the project run:
+## Developer environment
+
+- Node version is pinned with:
+	- `.nvmrc`
+	- `.node-version`
+
+Recommended local setup:
+
+1. Install Node 22 (LTS)
+2. Run `npm install`
+3. Run `npm start`
+
+### VS Code Dev Container
+
+This repo includes a ready-to-use dev container config:
+
+- [.devcontainer/devcontainer.json](.devcontainer/devcontainer.json)
+
+In VS Code, run **Dev Containers: Reopen in Container**. It will:
+
+- use Node 22 image
+- install dependencies (`npm install`)
+- forward port 4200
+
+## Docker (containerized app)
+
+This repo includes:
+
+- [Dockerfile](Dockerfile)
+- [nginx.conf](nginx.conf)
+- [.dockerignore](.dockerignore)
+
+### Build image
 
 ```bash
-ng build
+docker build -t codewars-scoring-app:latest .
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+### Run container
 
 ```bash
-ng test
+docker run --rm -p 8080:80 codewars-scoring-app:latest
 ```
 
-## Running end-to-end tests
+Then open http://localhost:8080.
 
-For end-to-end (e2e) testing, run:
+### Docker Compose
+
+Use the included compose file for one-command startup:
 
 ```bash
-ng e2e
+docker compose up --build -d
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Stop it with:
 
-## Additional Resources
+```bash
+docker compose down
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Codewars APIs used by this app
+
+Detailed API contract docs are in [docs/api-integration.md](docs/api-integration.md), including:
+
+- Specific endpoint URLs currently used
+- Expected response fields (with JSON examples)
+- Error handling expectations
+- Links to official Codewars API documentation sections
+
+Official documentation root:
+- https://dev.codewars.com/
+
+## Repository structure (docs)
+
+```
+docs/
+	user-guide.md
+	operator-quick-card.md
+	runbook.md
+	configuration-reference.md
+	api-integration.md
+	testing-and-quality.md
+```
+
+## Audience
+
+- Event operators running the board live
+- Maintainers updating yearly team/rule configuration
+- Developers extending integration and scoring logic
