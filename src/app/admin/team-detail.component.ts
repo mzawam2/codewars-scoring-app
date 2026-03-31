@@ -59,7 +59,7 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
     const params = this.route.snapshot.params;
     this.teamIndex = parseInt(params['teamIndex'], 10);
 
-    if (this.teamIndex === null || this.teamIndex < 0 || this.teamIndex >= SCOREBOARD_TEAMS_CONFIG.length) {
+    if (this.teamIndex === null || Number.isNaN(this.teamIndex) || this.teamIndex < 0 || this.teamIndex >= SCOREBOARD_TEAMS_CONFIG.length) {
       this.error = 'Team not found';
       this.loading = false;
       return;
